@@ -9,15 +9,16 @@ import java.util.Arrays;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 
+import io.github.prasanna1433.constant.KafkaConstant;
+
 public class KafkaConsumerWithAutoOffsetCommit {
 	private static final Logger logger = Logger.getLogger(KafkaConsumerWithAutoOffsetCommit.class);
 
 	public static void main(String[] args) {
-
 		// define the properties for the kafka consumer
 		Properties consumerProperties = new Properties();
 		// specify the kafka cluster that the consumer has to connect
-		consumerProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.0.30:9092, 192.168.0.31:9092, 192.168.0.32:9092");
+		consumerProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstant.BOOTSTRAP_SERVERS);
 		// specify the consumer group name to which all the works should join
 		consumerProperties.put(ConsumerConfig.GROUP_ID_CONFIG, "ghp-java-consumer-group-1");
 		// allowing the consumer to commit their offset automatically
@@ -44,7 +45,7 @@ public class KafkaConsumerWithAutoOffsetCommit {
 			for (ConsumerRecord record : newRecords) {
 				// each kafka message will have a topic name, partition number, timestamp at which that record for inserted, offset in that partition, key and value
 				System.out.printf("Topic name=%s Partiton=%d Timestamp=%d Offset = %d Key=%s Value=%s \n", record.topic(), record.partition(), record.timestamp(), record.offset(), record.key(),
-					record.value());
+						record.value());
 			}
 		}
 	}
